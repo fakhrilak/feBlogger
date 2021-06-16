@@ -1,0 +1,32 @@
+.Container-write{
+    width: 100%;
+}
+.Container-judul{
+    width: 100%;
+}
+.write{
+    width: 80%;
+    margin-left: 10%;
+}
+.Container-judul input{
+    width: 600px;
+    height: 30px;
+    margin: 20px;
+}
+.button{
+    width: 80%;
+    margin: 10%;
+    background-color: #adad85;
+}
+.button button{
+    float: left;
+    width: 70px;
+    height: 40px;
+    background-color: #adad85;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-display: initial;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
