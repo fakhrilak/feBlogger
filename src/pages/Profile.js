@@ -8,10 +8,14 @@ import {
   faTransgender,
   faPhone,
   faLocationArrow,
+  faMoneyCheck,
+  faUserCheck,
+  faMoneyBill,
 } from "@fortawesome/free-solid-svg-icons";
 import { connect, useDispatch } from "react-redux";
-import { API,config } from "../config/api";
+import { API,config,APIimage } from "../config/api";
 import { loadUser } from "../redux/actions/auth";
+import { useHistory } from "react-router-dom";
 
 
 const Profile = ({auth:{user,isAuthenticated},loadUser}) => {
@@ -22,8 +26,12 @@ const Profile = ({auth:{user,isAuthenticated},loadUser}) => {
     const [gendre,setGendre] = useState("")
     const [phone,setPhone] = useState("")
     const [addres,setAddres] =useState("")
+    const [norek,setNorek] = useState("")
+    const [namerek,setNamerek] = useState("")
+    const [nameBank,setNameBank] = useState("")
 
     const dispatch = useDispatch()
+    const history =useHistory()
     const onEditImage=()=>{
       const data = new FormData()
         data.append("addres",addres)
@@ -32,7 +40,11 @@ const Profile = ({auth:{user,isAuthenticated},loadUser}) => {
         data.append("name",name)
         data.append("email",email)
         data.append("file",Image)
-        API.post("/edit-profile",data,config)
+        data.append("norek",norek)
+        data.append("nameRek",namerek)
+        data.append("nameBank",nameBank)
+
+        API.patch("/profile",data,config)
         .then((res)=>{
             alert(res.data.message)
             dispatch(loadUser())
@@ -49,6 +61,9 @@ const Profile = ({auth:{user,isAuthenticated},loadUser}) => {
       setAddres(user.addres)
       setGendre(user.gendre)
       setPhone(user.phone)
+      setNamerek(user.noRek.nameRek)
+      setNameBank(user.noRek.bankName)
+      setNorek(user.noRek.noRek)
     }
   return isAuthenticated ? (
      <div className="profile-container">
@@ -62,11 +77,11 @@ const Profile = ({auth:{user,isAuthenticated},loadUser}) => {
               <FontAwesomeIcon icon={faUser} />
             </div>
             <div className="profile-details">
-              <span>Fullname</span>
+              <span  style={{textAlign:"left"}}>Fullname</span>
               {!profile ? <span style={{ fontSize: "18px", fontWeight: "bold" }}>
                 {user.name}
               </span>:
-              <span style={{ fontSize: "18px", fontWeight: "bold" }}>
+              <span style={{ fontSize: "18px", fontWeight: "bold" }} className="form-EDIT">
                <input
                   value= {name}
                   onChange = {(e)=>setName(e.target.value)}
@@ -80,10 +95,11 @@ const Profile = ({auth:{user,isAuthenticated},loadUser}) => {
             </div>
             <div className="profile-details">
               <span style={{textAlign:"left"}}>Email</span>
-              {!profile ?<span style={{ fontSize: "18px", fontWeight: "bold" }}>
+              {!profile ?
+              <span style={{ fontSize: "18px", fontWeight: "bold" }}>
                 {user.email}
               </span>:
-              <span style={{ fontSize: "18px", fontWeight: "bold" }}>
+              <span style={{ fontSize: "18px", fontWeight: "bold" }} className="form-EDIT">
                <input
                   value={email}
                   onChange={(e)=>setEmail(e.target.value)}
@@ -96,11 +112,11 @@ const Profile = ({auth:{user,isAuthenticated},loadUser}) => {
               <FontAwesomeIcon icon={faTransgender} />
             </div>
             <div className="profile-details">
-              <span>Gender</span>
+              <span  style={{textAlign:"left"}}>Gender</span>
               {!profile ? <span style={{ fontSize: "18px", fontWeight: "bold" }}>
                 {user.gendre}
               </span> :
-              <span style={{ fontSize: "18px", fontWeight: "bold" }}>
+              <span style={{ fontSize: "18px", fontWeight: "bold" }} className="form-EDIT">
                <input
                   value={gendre}
                   onChange={(e)=>setGendre(e.target.value)}
@@ -117,7 +133,7 @@ const Profile = ({auth:{user,isAuthenticated},loadUser}) => {
               {!profile ? <span style={{ fontSize: "18px", fontWeight: "bold" }}>
                 {user.phone}
               </span>:
-              <span style={{ fontSize: "18px", fontWeight: "bold" }}>
+              <span style={{ fontSize: "18px", fontWeight: "bold" }}  className="form-EDIT">
                <input
                   value={phone}
                   onChange={(e)=>setPhone(e.target.value)}
@@ -130,11 +146,11 @@ const Profile = ({auth:{user,isAuthenticated},loadUser}) => {
               <FontAwesomeIcon icon={faLocationArrow} />
             </div>
             <div className="profile-details">
-              <span style={{textAlign:"left"}}>Address</span>
+              <span style={{textAlign:"left"}}  className="form-EDIT">Address</span>
               {!profile ?<span style={{ fontSize: "18px", fontWeight: "bold" }}>
                 {user.addres}
               </span>:
-              <span style={{ fontSize: "18px", fontWeight: "bold" }}>
+              <span style={{ fontSize: "18px", fontWeight: "bold" }}  className="form-EDIT">
                <input
                   value={addres}
                   onChange={(e)=>setAddres(e.target.value)}
@@ -142,7 +158,59 @@ const Profile = ({auth:{user,isAuthenticated},loadUser}) => {
               </span>}
             </div>
           </div>
+          <div className="profile-data">
+            <div className="profile-icon">
+              <FontAwesomeIcon icon={faMoneyBill} />
+            </div>
+            <div className="profile-details">
+              <span style={{textAlign:"left"}}>Nama Bank</span>
+              {!profile ? <span style={{ fontSize: "18px", fontWeight: "bold" }}>
+                {user.noRek.noRek}
+              </span>:
+              <span style={{ fontSize: "18px", fontWeight: "bold" }}  className="form-EDIT">
+               <input
+                  value={norek}
+                  onChange={(e)=>setNorek(e.target.value)}
+               />
+              </span>}
+            </div>
+          </div>
+          <div className="profile-data">
+              <div className="profile-icon">
+                <FontAwesomeIcon icon={faMoneyCheck} />
+              </div>
+              <div className="profile-details">
+                <span style={{textAlign:"left"}}>Nomer Rekening</span>
+                {!profile ? <span style={{ fontSize: "18px", fontWeight: "bold" }}>
+                  {user.noRek.bankName}
+                </span>:
+                <span style={{ fontSize: "18px", fontWeight: "bold" }}  className="form-EDIT">
+                <input
+                    value={nameBank}
+                    onChange={(e)=>setNameBank(e.target.value)}
+                />
+                </span>}
+            </div>
+          </div>
+          <div className="profile-data">
+              <div className="profile-icon">
+                <FontAwesomeIcon icon={faUserCheck} />
+              </div>
+              <div className="profile-details">
+                <span style={{textAlign:"left"}}>Atas Nama</span>
+                {!profile ? <span style={{ fontSize: "18px", fontWeight: "bold" }}>
+                  {user.noRek.nameRek}
+                </span>:
+                <span style={{ fontSize: "18px", fontWeight: "bold" }}  className="form-EDIT">
+                <input
+                    value={namerek}
+                    onChange={(e)=>setNamerek(e.target.value)}
+                />
+                </span>}
+            </div>
+          </div>
         </div>
+        
         <div className="profile-img">
           {user.image == "" ?
           <img src={avatar} 
@@ -150,7 +218,7 @@ const Profile = ({auth:{user,isAuthenticated},loadUser}) => {
           className="profile-avatar" 
           onDoubleClick={()=>onEdit()}
           />:
-          <img src={user.image} 
+          <img src={APIimage+user.image} 
           alt="avatar" 
           className="profile-avatar" 
           onDoubleClick={()=>onEdit()}
@@ -167,6 +235,11 @@ const Profile = ({auth:{user,isAuthenticated},loadUser}) => {
           >
             Edit
           </button>:null}
+          {profile ? 
+          <button
+          onClick={()=>history.push("/change-password")}
+          >Change Password</button>:null
+          }
         </div>
       </div>:null}
     </div>

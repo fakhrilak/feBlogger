@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import logo from "../img/logo.png"
-import {API,config} from "../config/api"
+import {API,config,APIimage} from "../config/api"
 import {connect} from "react-redux"
 import "./Post.css"
 import { useHistory } from 'react-router-dom'
@@ -12,18 +12,18 @@ const Post = ({auth}) => {
     useEffect(()=>{
         API.get("/content",config)
         .then((res)=>{
-            setContent(res.data.data)
-            console.log(res.data.data[0]._id)
+            setContent(res.data.content)
+            console.log(res.data)
         })
         .catch((err)=>{
-            console.log(err.response)
+            console.log(err)
         })
     },[])
     return (
         <div className="container-post">
             {Content.length > 0?(Content.map((data)=>(
                 <div className="card" onClick={()=>history.push(`/content/${data._id}`)}>
-                    <img src={"http://localhost:5000/ta/thumbnil/"+data.tumbname} style={{width:100}}/>
+                    <img src={APIimage+data.tumbname} style={{width:200}}/>
                     <div className="container">
                         <h4>{data.judul}</h4>
                         <p className="hide-text">{renderHTML(data.kontent)}</p>

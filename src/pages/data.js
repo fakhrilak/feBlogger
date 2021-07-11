@@ -2,7 +2,7 @@ export const modules = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
       ['blockquote', 'code-block'],
-    
+      [{ 'align': null}, {'align': 'center'}, {'align': 'right'}, {'align': 'justify'}],
       [{ 'header': 1 }, { 'header': 2 }],               // custom button values
       [{ 'list': 'ordered'}, { 'list': 'bullet' }],
       [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
@@ -14,7 +14,6 @@ export const modules = {
     
       [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
       [{ 'font': [] }],
-      [{ 'align': [] }],
       ['link','image'],
       ['clean']
     ],
@@ -24,5 +23,5 @@ export const formats = [
     'header',
     'bold', 'italic', 'underline', 'strike', 'blockquote',
     'list', 'bullet', 'indent',
-    'link', 'image'
+    'link', 'image', 'align','direction'
   ]

@@ -1,0 +1,21 @@
+.form-group1{
+    padding-bottom: 10px;
+}
+.custom-input1{
+width: 400px;
+height: 30px;
+border-radius: 5px;
+border-color: black;
+padding-left: 10px;
+}
+.form-submit1{
+padding-bottom: 0px;
+}
+.btn-submit1{
+width: 100px;
+height: 25px;
+border-radius: 5px;
+border-color: black;
+font-weight: bolder;
+font-size: 15px;
+}

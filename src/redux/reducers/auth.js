@@ -30,6 +30,7 @@ const initialState = {
           error:""
         }
       case types.load_user_success:
+        console.log(payload,"load")
         return{
           ...state,
           user: payload.data,
@@ -45,7 +46,7 @@ const initialState = {
           localStorage.removeItem("token");
           return{
               ...state,
-              isAuthenticated: null,
+              isAuthenticated: false,
               loading: true,
               user: null,
           }

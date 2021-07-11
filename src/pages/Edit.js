@@ -6,13 +6,21 @@ import {formats,modules} from "./data"
 import {API,config} from "../config/api"
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom'
-const Edit = ({auth:{}}) => {
+const Edit = ({auth:{user}}) => {
     const [editor,setEditor] =useState("")
     const [judul,setJudul] = useState("")
     const [triger,setTriger] = useState(false)
     const {id} = useParams()
+    console.log(id)
     useEffect(()=>{
-        API.get(`/content/${id}`,config)
+        let userId = ""
+        if(user==null){
+            userId=""
+        }else{
+            userId=user._id
+        }
+        console.log(user)
+        API.get(`/content/${id}/?id_req=${userId}`,config)
         .then((res)=>{
             setEditor(res.data.value.kontent)
             setJudul(res.data.value.judul)
@@ -27,7 +35,7 @@ const Edit = ({auth:{}}) => {
             body : editor,
             judul:judul
         }
-        API.post("/edit-content",body,config)
+        API.patch("/content",body,config)
         .then((res)=>{
             alert(res.data.message)
             setTriger(!triger)
@@ -36,8 +44,10 @@ const Edit = ({auth:{}}) => {
             alert(err)
         })
     }
+
     return (
         <div className="Container-write">
+            
             <div className="Container-judul">
                 <input
                 value={judul}
@@ -60,6 +70,7 @@ const Edit = ({auth:{}}) => {
                     value={editor}
                     placeholder='Write your story here'
                     onChange={(e) => setEditor(e)}
+                    style={{height:400}}
                   />              
               </div>
             <div className="button">

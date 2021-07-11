@@ -18,8 +18,6 @@ const Login = ({HandleLogin,handleLogin,Register,Loginaksen,auth:{error,loading}
         e.preventDefault();
         handleLogin(email, password,Loginaksen);
       };
-
-      console.log(HandleLogin,"ini di login")
   return (
     <div >
         {HandleLogin ? (

@@ -152,6 +152,7 @@
       color: #1d548b;
     }
     li button{
+      margin: 10px;
       width: 70px;
       height: 30px;
       border: 1px solid #ffffff;
@@ -160,5 +161,14 @@
       border-color: linear-gradient(to right,#E55D87, #5FC3E4);
       color: #ffffff;
       background-image: linear-gradient(to right,#E55D87, #3399ff);
+    }
+    .Container-Navbar button{
+      margin-left: 10px;
+      margin-top: 30px;
+      float: left;
+      text-align: center;
+      background-color: #adad85;
+      border: 1px solid white;
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     }
   }

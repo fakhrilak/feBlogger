@@ -1,0 +1,13 @@
+.container-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 10px;
+}
+
+@media screen and (max-width:480px){
+    .container-grid{
+        display: grid;
+        grid-template-columns: none;
+        margin: 10px;
+    }
+}

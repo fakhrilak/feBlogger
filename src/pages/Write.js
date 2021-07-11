@@ -15,12 +15,15 @@ const Write = ({auth:{user}}) => {
     const [imagepreview,setImagePreview] = useState(null)
     const history = useHistory()
     var now = dayjs(new Date()).format("dddd, MMMM D, YYYY h:mm A")
+    var bulan = dayjs(new Date()).format("MM")
+
     const onClick = ()=>{
         const data = new FormData()
         data.append("judul",judul)
         data.append("status",false)
         data.append("kontent",editor)
         data.append("createAt",now)
+        data.append("bulan",bulan)
         data.append("idUser",user._id)
         data.append("file",image)
         API.post("/content",data,config)
@@ -65,6 +68,7 @@ const Write = ({auth:{user}}) => {
                     formats={formats}
                     placeholder='Write your story here'
                     onChange={(e) => setEditor(e)}
+                    style={{height:400}}
                   />              
               </div>
             <div className="button">

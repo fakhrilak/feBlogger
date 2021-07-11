@@ -1,25 +1,36 @@
 import React,{useState,useEffect} from 'react'
 import renderHTML from 'react-render-html'
 import { useHistory } from 'react-router-dom'
-import {API ,config } from '../config/api'
+import {API ,APIimage,config } from '../config/api'
 
 const Notif = () => {
     const [select,setSelect] = useState("")
     const [content,setConetent] = useState([])
+    const [User,setUser] = useState([])
+    const [controller,setController] =useState(false)
     const history = useHistory()
     useEffect(()=>{
         API.get(`/content?status=${select}`,config)
-        .then((res)=>{
-            console.log(res.data)
-            setConetent(res.data.data)
+        .then(async(res)=>{
+            // console.log(res.data)
+            setConetent(res.data.content)
+            setUser(res.data.users)
+
         })
         .catch((err)=>{
             console.log(err)
         })
     },[select])
     
+
+    
+    
     return (
         <div>
+            <div className="controller">
+               <p onClick={()=>setController(false)}>POST</p>
+               <p onClick={()=>setController(true)}>USER</p>
+            </div>
             <div>
             <select
             value={select}
@@ -31,17 +42,32 @@ const Notif = () => {
                 <option value={true}>Posted</option>
             </select>
             </div>
-            <div className="container-post" style={{paddingTop:40,margin:20}}>
-            {content.length > 0?(content.map((data)=>(
+            <div className="container-post" style={{paddingTop:40,margin:10}}>
+            {content.length > 0 && controller == false?(content.map((data)=>(
                 <div className="card" onClick={()=>history.push(`/content/${data._id}`)}>
-                    <img src={"http://localhost:5000/ta/thumbnil/"+data.tumbname} style={{width:100}}/>
+                   
+                    <img src={APIimage+data.tumbname}/>
                     <div className="container">
                         <h4>{data.judul}</h4>
                         <p className="hide-text">{renderHTML(data.kontent)}</p>
                     </div>
                 </div>
             ))):null}
-        </div>
+            </div>
+            <div className="container-post" style={{paddingTop:40,margin:20}}>
+            {User.length > 0 && controller == true?(User.map((data)=>(
+                <div className="card" onClick={()=>history.push(`/content/${data._id}`)}>
+                     <div className="container" style={{textAlign:"left"}}>
+                        <p>Nama : {data.user.name}</p>
+                        <p>Email : {data.user.email}</p>
+                        { select == ""?
+                        <p>Total Post : {data.qty}</p> :
+                        <p>Jumlah Post Bulan Ini : {data.qty}</p>
+                        }
+                    </div>
+                </div>
+            ))):null}
+            </div>
         </div>
     )
 }
